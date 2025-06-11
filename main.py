@@ -1,10 +1,9 @@
 from flask import Flask, request, jsonify
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import FAISS
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_community.vectorstores import FAISS
 from langchain.text_splitter import CharacterTextSplitter
-from langchain.document_loaders import TextLoader
+from langchain_community.document_loaders import TextLoader
 from langchain.chains import RetrievalQA
-from langchain.chat_models import ChatOpenAI
 import os
 
 # Set API key
