@@ -12,28 +12,56 @@ os.environ["OPENAI_API_KEY"] = "sk-proj-IPTplSKjtikzpvbfVdMB-WUiQ-4i0JzQlk-Yj_Hy
 # Initialize app
 app = Flask(__name__)
 
-# Load and process your documents
-loader = TextLoader("Texts/Ulysses.txt")  # Start with one file
-docs = loader.load()
-splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=100)
-split_docs = splitter.split_documents(docs)
+# Initialize global variables
+db = None
+qa = None
 
-# Embed and store in FAISS vector DB
-embedding = OpenAIEmbeddings()
-db = FAISS.from_documents(split_docs, embedding)
-
-# Set up retriever and chain
-retriever = db.as_retriever()
-qa = RetrievalQA.from_chain_type(llm=ChatOpenAI(model_name="gpt-4o"), retriever=retriever)
+def initialize_ai():
+    global db, qa
+    try:
+        # Load and process your documents with smaller chunks
+        loader = TextLoader("Texts/Ulysses.txt")
+        docs = loader.load()
+        splitter = CharacterTextSplitter(chunk_size=400, chunk_overlap=50)
+        split_docs = splitter.split_documents(docs)
+        
+        # Embed and store in FAISS vector DB
+        embedding = OpenAIEmbeddings()
+        db = FAISS.from_documents(split_docs, embedding)
+        
+        # Set up retriever and chain
+        retriever = db.as_retriever()
+        qa = RetrievalQA.from_chain_type(llm=ChatOpenAI(model_name="gpt-4o"), retriever=retriever)
+        print("AI initialization successful!")
+        return True
+    except Exception as e:
+        print(f"AI initialization failed: {e}")
+        return False
 
 # Flask route for Thunkable to send a message
 @app.route('/ask', methods=['POST'])
 def ask():
-    data = request.get_json()
-    question = data.get("question")
-    response = qa.run(question)
-    return jsonify({"reply": response})
+    global qa
+    if qa is None:
+        return jsonify({"reply": "AI system not initialized. Please check your OpenAI API key and quota."})
+    
+    try:
+        data = request.get_json()
+        question = data.get("question")
+        response = qa.run(question)
+        return jsonify({"reply": response})
+    except Exception as e:
+        return jsonify({"reply": f"Error processing question: {str(e)}"})
+
+# Test route to check if server is running
+@app.route('/')
+def home():
+    return "Flask server is running! Use POST /ask to query the AI."
 
 # Start Flask app
 if __name__ == '__main__':
+    print("Starting Flask server...")
+    print("Attempting to initialize AI system...")
+    initialize_ai()  # Try to initialize, but don't fail if it doesn't work
+    print("Flask server starting on http://0.0.0.0:3000")
     app.run(host="0.0.0.0", port=3000)
