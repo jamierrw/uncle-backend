@@ -1,3 +1,5 @@
+import os
+import openai
 from flask import Flask, request, jsonify
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_community.vectorstores import FAISS
@@ -6,17 +8,16 @@ from langchain_community.document_loaders import TextLoader
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 from langchain_core.documents import Document
-import os
-import openai
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Initialize global variables
 db = None
 qa = None
-
-# Initialize app
-app = Flask(__name__)
 
 # Define your AI setup function
 def initialize_ai():
