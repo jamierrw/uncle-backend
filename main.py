@@ -35,7 +35,7 @@ def initialize_ai():
         print(f"Split into {len(split_docs)} chunks")
         
         # Embed and store in FAISS vector DB
-        embedding = OpenAIEmbeddings()
+        embedding = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"))
         db = FAISS.from_documents(split_docs, embedding)
         
         # Create a custom prompt template
@@ -71,7 +71,7 @@ Answer:"""
         print(f"AI initialization failed: {e}")
         return False
 
-# Flask route for Thunkable to send a message
+# Flask route for sending a message
 @app.route('/ask', methods=['POST'])
 def ask():
     global qa
