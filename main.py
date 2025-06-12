@@ -6,8 +6,7 @@ from langchain_community.document_loaders import TextLoader
 from langchain.chains import RetrievalQA
 import os
 
-# Set API key
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY")
 
 # Initialize app
 app = Flask(__name__)
