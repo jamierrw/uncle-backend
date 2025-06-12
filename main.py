@@ -125,10 +125,6 @@ def test_page():
     with open('test.html', 'r') as f:
         return f.read()
 
-# Start Flask app
-if __name__ == '__main__':
-    print("Starting Flask server...")
-    print("Attempting to initialize AI system...")
-    initialize_ai()  # Try to initialize, but don't fail if it doesn't work
-    print("Flask server starting on http://0.0.0.0:5000")
-    app.run(host="0.0.0.0", port=5000)
+# Start AI when the module is imported (even with gunicorn)
+print("🚀 Starting Uncle server...")
+initialize_ai()
