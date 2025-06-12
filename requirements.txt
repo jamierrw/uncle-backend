@@ -3,6 +3,7 @@ gunicorn
 openai
 langchain
 langchain-openai
+langchain-community
 tiktoken
 python-dotenv
 requests
