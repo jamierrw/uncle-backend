@@ -5,20 +5,20 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
+from langchain_core.documents import Document
 import os
 import openai
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-print("✅ Starting Uncle server...")
-
-# Initialize app
-app = Flask(__name__)
-
 # Initialize global variables
 db = None
 qa = None
 
+# Initialize app
+app = Flask(__name__)
+
+# Define your AI setup function
 def initialize_ai():
     print("DEBUG: OPENAI_API_KEY loaded:", os.getenv("OPENAI_API_KEY")[:8])  # Only show start for safety
     global db, qa
