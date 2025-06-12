@@ -57,6 +57,12 @@ def ask():
 def home():
     return "Flask server is running! Use POST /ask to query the AI."
 
+# Route to serve the test page
+@app.route('/test.html')
+def test_page():
+    with open('test.html', 'r') as f:
+        return f.read()
+
 # Start Flask app
 if __name__ == '__main__':
     print("Starting Flask server...")
