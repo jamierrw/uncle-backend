@@ -76,8 +76,9 @@ Answer:"""
         else:
             print("✅ QA system is ready.")
         return True
-        except Exception as e:
-            print(f"AI initialization failed: {e}")
+        
+    except Exception as e:
+        print(f"AI initialization failed: {e}")
         return False
 
 # Flask route for sending a message
