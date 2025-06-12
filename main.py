@@ -1,9 +1,10 @@
 from flask import Flask, request, jsonify
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_community.vectorstores import FAISS
-from langchain.text_splitter import CharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
 from langchain.chains import RetrievalQA
+from langchain.prompts import PromptTemplate
 import os
 
 os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY")
@@ -18,19 +19,51 @@ qa = None
 def initialize_ai():
     global db, qa
     try:
-        # Load and process your documents with smaller chunks
-        loader = TextLoader("Texts/Ulysses.txt")
+        # Load and process your documents with better text splitting
+        loader = TextLoader("Texts/Ulysses.txt", encoding='utf-8')
         docs = loader.load()
-        splitter = CharacterTextSplitter(chunk_size=400, chunk_overlap=50)
+        print(f"Loaded document with {len(docs)} pages")
+        
+        # Use RecursiveCharacterTextSplitter for better chunking
+        splitter = RecursiveCharacterTextSplitter(
+            chunk_size=1000,
+            chunk_overlap=200,
+            length_function=len,
+        )
         split_docs = splitter.split_documents(docs)
+        print(f"Split into {len(split_docs)} chunks")
         
         # Embed and store in FAISS vector DB
         embedding = OpenAIEmbeddings()
         db = FAISS.from_documents(split_docs, embedding)
         
-        # Set up retriever and chain
-        retriever = db.as_retriever()
-        qa = RetrievalQA.from_chain_type(llm=ChatOpenAI(model_name="gpt-4o"), retriever=retriever)
+        # Create a custom prompt template
+        prompt_template = """Use the following pieces of context from James Joyce's Ulysses to answer the question. If you don't know the answer based on the context, just say that you don't have enough information.
+
+Context:
+{context}
+
+Question: {question}
+
+Answer:"""
+        
+        PROMPT = PromptTemplate(
+            template=prompt_template, input_variables=["context", "question"]
+        )
+        
+        # Set up retriever and chain with better configuration
+        retriever = db.as_retriever(
+            search_type="similarity",
+            search_kwargs={"k": 4}
+        )
+        
+        qa = RetrievalQA.from_chain_type(
+            llm=ChatOpenAI(model_name="gpt-4o", temperature=0.1),
+            chain_type="stuff",
+            retriever=retriever,
+            chain_type_kwargs={"prompt": PROMPT},
+            return_source_documents=True
+        )
         print("AI initialization successful!")
         return True
     except Exception as e:
@@ -47,9 +80,21 @@ def ask():
     try:
         data = request.get_json()
         question = data.get("question")
-        response = qa.run(question)
-        return jsonify({"reply": response})
+        
+        # Use invoke instead of deprecated run method
+        result = qa.invoke({"query": question})
+        
+        # Extract the answer from the result
+        answer = result["result"]
+        
+        # Optionally include source information
+        sources = result.get("source_documents", [])
+        if sources:
+            answer += f"\n\n(Based on {len(sources)} relevant passages from Ulysses)"
+        
+        return jsonify({"reply": answer})
     except Exception as e:
+        print(f"Error processing question: {e}")
         return jsonify({"reply": f"Error processing question: {str(e)}"})
 
 # Test route to check if server is running
