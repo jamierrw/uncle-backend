@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test AI Query</title>
+</head>
+<body>
+    <h1>Test Ulysses AI</h1>
+    <textarea id="question" placeholder="Ask a question about Ulysses..." rows="3" cols="50"></textarea><br><br>
+    <button onclick="askQuestion()">Ask Question</button>
+    <div id="response" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc; background-color: #f9f9f9;"></div>
+
+    <script>
+        async function askQuestion() {
+            const question = document.getElementById('question').value;
+            const responseDiv = document.getElementById('response');
+            
+            if (!question.trim()) {
+                responseDiv.innerHTML = "Please enter a question.";
+                return;
+            }
+            
+            responseDiv.innerHTML = "Loading...";
+            
+            try {
+                const response = await fetch('/ask', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({question: question})
+                });
+                
+                const data = await response.json();
+                responseDiv.innerHTML = `<strong>Answer:</strong> ${data.reply}`;
+            } catch (error) {
+                responseDiv.innerHTML = `<strong>Error:</strong> ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
