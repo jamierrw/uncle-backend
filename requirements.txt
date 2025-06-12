@@ -1,7 +1,8 @@
-﻿flask
+flask
 gunicorn
 openai
 langchain
+langchain-openai
 tiktoken
 python-dotenv
 requests
