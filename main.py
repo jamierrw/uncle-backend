@@ -18,6 +18,7 @@ db = None
 qa = None
 
 def initialize_ai():
+    print("DEBUG: OPENAI_API_KEY loaded:", os.getenv("OPENAI_API_KEY")[:8])  # Only show start for safety
     global db, qa
     try:
         # Load and process your documents with better text splitting
@@ -35,7 +36,9 @@ def initialize_ai():
         print(f"Split into {len(split_docs)} chunks")
         
         # Embed and store in FAISS vector DB
+        print("DEBUG: Initializing OpenAIEmbeddings")
         embedding = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"))
+        print("DEBUG: Embeddings initialized successfully")
         db = FAISS.from_documents(split_docs, embedding)
         
         # Create a custom prompt template
@@ -65,9 +68,15 @@ Answer:"""
             chain_type_kwargs={"prompt": PROMPT},
             return_source_documents=True
         )
+
         print("AI initialization successful!")
+        # ✅ Fail-safe: confirm if 'qa' was created
+        if qa is None:
+        print("ERROR: QA system is still None after setup!")
+        else:
+        print("✅ QA system is ready.")
         return True
-    except Exception as e:
+        except Exception as e:
         print(f"AI initialization failed: {e}")
         return False
 
