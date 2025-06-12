@@ -72,12 +72,12 @@ Answer:"""
         print("AI initialization successful!")
         # ✅ Fail-safe: confirm if 'qa' was created
         if qa is None:
-        print("ERROR: QA system is still None after setup!")
+            print("ERROR: QA system is still None after setup!")
         else:
-        print("✅ QA system is ready.")
+            print("✅ QA system is ready.")
         return True
         except Exception as e:
-        print(f"AI initialization failed: {e}")
+            print(f"AI initialization failed: {e}")
         return False
 
 # Flask route for sending a message
