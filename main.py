@@ -24,9 +24,10 @@ def initialize_ai():
     global db, qa
     try:
         # Load and process your documents with better text splitting
-        loader = TextLoader("Texts/Ulysses.txt", encoding='utf-8')
-        docs = loader.load()
-        print(f"Loaded document with {len(docs)} pages")
+        # loader = TextLoader("Texts/Ulysses.txt", encoding='utf-8')
+        # docs = loader.load()
+        # print(f"Loaded document with {len(docs)} pages")
+        docs = [Document(page_content="Mr Bloom walked unheeded...")]
         
         # Use RecursiveCharacterTextSplitter for better chunking
         splitter = RecursiveCharacterTextSplitter(
