@@ -10,6 +10,8 @@ import openai
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
+print("✅ Starting Uncle server...")
+
 # Initialize app
 app = Flask(__name__)
 
