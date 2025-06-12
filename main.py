@@ -6,8 +6,9 @@ from langchain_community.document_loaders import TextLoader
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 import os
+import openai
 
-os.environ["OPENAI_API_KEY"] = os.environ.get("OPENAI_API_KEY")
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Initialize app
 app = Flask(__name__)
