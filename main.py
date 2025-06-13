@@ -75,14 +75,15 @@ Uncle says:
             search_kwargs={"k": 4}
         )
         
-        qa = RetrievalQA.from_chain_type(
-            llm=ChatOpenAI(model_name="gpt-4o", temperature=0.1),
-            chain_type="stuff",
+        from langchain.chains.qa_with_sources import load_qa_with_sources_chain
+        from langchain.chains import RetrievalQA
+
+        llm = ChatOpenAI(model_name="gpt-4o", temperature=0.1)
+        chain = load_qa_with_sources_chain(llm, chain_type="stuff", prompt=PROMPT)
+
+        qa = RetrievalQA(
             retriever=retriever,
-            chain_type_kwargs={
-                "prompt": PROMPT,
-                "document_variable_name": "context"  # ← this is the fix
-            },
+            combine_documents_chain=chain,
             return_source_documents=True
         )
 
