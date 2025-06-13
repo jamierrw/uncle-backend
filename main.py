@@ -67,7 +67,7 @@ Uncle says:
         
         PROMPT = PromptTemplate(
             template=prompt_template,
-            input_variables=["context", "question"]
+            input_variables=["question", "question"]
         )
         
         retriever = db.as_retriever(
