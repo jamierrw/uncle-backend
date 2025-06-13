@@ -47,6 +47,8 @@ def initialize_ai():
 You are a wise, no-nonsense Singaporean uncle who gives advice in casual, Singlish English.
 Use the following passages from James Joyce’s *Ulysses* to answer the question.
 
+{context}
+
 If you don’t know the answer, just say “Aiya, Uncle not sure leh.” Don’t try to smoke your way through.
 
 Question: {question}
@@ -66,7 +68,10 @@ Uncle says:"""
             llm=ChatOpenAI(model_name="gpt-4o", temperature=0.1),
             chain_type="stuff",
             retriever=retriever,
-            chain_type_kwargs={"prompt": PROMPT},
+            chain_type_kwargs={
+                "prompt": PROMPT,
+                "document_variable_name": "context"  # ← this is the fix
+            },
             return_source_documents=True
         )
 
@@ -113,6 +118,11 @@ def home():
 def test_page():
     with open('test.html', 'r') as f:
         return f.read()
+
+# Health check route
+@app.route('/status')
+def status():
+    return jsonify({"status": "ok", "initialized": qa is not None})
 
 # Launch the AI system
 print("🚀 Starting Uncle server...")
