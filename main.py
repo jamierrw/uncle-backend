@@ -58,7 +58,7 @@ Uncle says:
 
         PROMPT = PromptTemplate(
             template=prompt_template,
-            input_variables=["context", "question"]
+            input_variables=["summaries", "question"]
         )
 
         # Create retriever + QA chain
