@@ -24,14 +24,11 @@ def initialize_ai():
     print("DEBUG: OPENAI_API_KEY loaded:", os.getenv("OPENAI_API_KEY")[:8])  # Only show start for safety
     global db, qa
     try:
-        # Load and process your documents with better text splitting
-        from langchain_community.document_loaders import TextLoader
-
+        # Load and process your documents
         loader = TextLoader("Texts/Ulysses.txt", encoding='utf-8')
         docs = loader.load()
         print(f"Loaded document with {len(docs)} pages")
         
-        # Use RecursiveCharacterTextSplitter for better chunking
         splitter = RecursiveCharacterTextSplitter(
             chunk_size=1000,
             chunk_overlap=200,
@@ -40,27 +37,26 @@ def initialize_ai():
         split_docs = splitter.split_documents(docs)
         print(f"Split into {len(split_docs)} chunks")
         
-        # Embed and store in FAISS vector DB
         print("DEBUG: Initializing OpenAIEmbeddings")
         embedding = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"))
         print("DEBUG: Embeddings initialized successfully")
         db = FAISS.from_documents(split_docs, embedding)
         
-        # Create a custom prompt template
-        prompt_template = """Use the following pieces of context from James Joyce's Ulysses to answer the question. If you don't know the answer based on the context, just say that you don't have enough information.
+        # Singaporean uncle-style prompt
+        prompt_template = """
+You are a wise, no-nonsense Singaporean uncle who gives advice in casual, Singlish English.
+Use the following passages from James Joyce’s *Ulysses* to answer the question.
 
-Context:
-{context}
+If you don’t know the answer, just say “Aiya, Uncle not sure leh.” Don’t try to smoke your way through.
 
 Question: {question}
-
-Answer:"""
+Uncle says:"""
         
         PROMPT = PromptTemplate(
-            template=prompt_template, input_variables=["context", "question"]
+            template=prompt_template,
+            input_variables=["context", "question"]
         )
         
-        # Set up retriever and chain with better configuration
         retriever = db.as_retriever(
             search_type="similarity",
             search_kwargs={"k": 4}
@@ -75,21 +71,17 @@ Answer:"""
         )
 
         print("AI initialization successful!")
-
-        # ✅ Fail-safe: confirm if 'qa' was created
         if qa is None:
             print("ERROR: QA system is still None after setup!")
         else:
             print("✅ QA system is ready.")
-
         return True
         
     except Exception as e:
         print(f"AI initialization failed: {e}")
-        
         return False
 
-# Flask route for sending a message
+# Endpoint to ask questions
 @app.route('/ask', methods=['POST'])
 def ask():
     global qa
@@ -99,14 +91,9 @@ def ask():
     try:
         data = request.get_json()
         question = data.get("question")
-        
-        # Use invoke instead of deprecated run method
         result = qa.invoke({"query": question})
-        
-        # Extract the answer from the result
         answer = result["result"]
-        
-        # Optionally include source information
+
         sources = result.get("source_documents", [])
         if sources:
             answer += f"\n\n(Based on {len(sources)} relevant passages from Ulysses)"
@@ -116,17 +103,17 @@ def ask():
         print(f"Error processing question: {e}")
         return jsonify({"reply": f"Error processing question: {str(e)}"})
 
-# Test route to check if server is running
+# Basic home route
 @app.route('/')
 def home():
     return "Flask server is running! Use POST /ask to query the AI."
 
-# Route to serve the test page
+# Serve the test HTML
 @app.route('/test.html')
 def test_page():
     with open('test.html', 'r') as f:
         return f.read()
 
-# Start AI when the module is imported (even with gunicorn)
+# Launch the AI system
 print("🚀 Starting Uncle server...")
 initialize_ai()
