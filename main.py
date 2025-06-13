@@ -88,7 +88,7 @@ def ask():
     try:
         data = request.get_json()
         question = data.get("question")
-        result = qa.invoke({"question": question})
+        result = qa.invoke({"query": question})
         answer = result["result"]
 
         sources = result.get("source_documents", [])
