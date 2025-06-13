@@ -1,14 +1,14 @@
 import os
 import openai
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_community.vectorstores import FAISS
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
-from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
-from langchain_core.documents import Document
-from flask_cors import CORS
+from langchain.chains.qa_with_sources import load_qa_with_sources_chain
+from langchain.chains import RetrievalQA
 
 app = Flask(__name__)
 CORS(app)
@@ -19,34 +19,25 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 db = None
 qa = None
 
-# Define your AI setup function
+# AI setup function
 def initialize_ai():
-    print("DEBUG: OPENAI_API_KEY loaded:", os.getenv("OPENAI_API_KEY")[:8])  # Only show start for safety
+    print("DEBUG: OPENAI_API_KEY loaded:", os.getenv("OPENAI_API_KEY")[:8])  # Truncated for safety
     global db, qa
     try:
-        # Load and process your documents
+        # Load and process documents
         loader = TextLoader("Texts/Ulysses.txt", encoding='utf-8')
         docs = loader.load()
         print(f"Loaded document with {len(docs)} pages")
-        
-        splitter = RecursiveCharacterTextSplitter(
-            chunk_size=1000,
-            chunk_overlap=200,
-            length_function=len,
-        )
+
+        splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
         split_docs = splitter.split_documents(docs)
         print(f"Split into {len(split_docs)} chunks")
-        
-        print("DEBUG: Initializing OpenAIEmbeddings")
+
+        # Embed and store
         embedding = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"))
-        print("DEBUG: Embeddings initialized successfully")
         db = FAISS.from_documents(split_docs, embedding)
 
-        source_titles = [doc.metadata.get('source', '') for doc in split_docs]
-        unique_titles = list(set(filter(None, source_titles)))
-        print("Documents loaded:", unique_titles)
-        
-        # Singaporean uncle-style prompt
+        # Uncle-style prompt
         prompt_template = """
 You are a wise, straight-talking Singaporean uncle who gives practical advice in casual, slightly cheeky Singlish.
 
@@ -64,20 +55,14 @@ Here’s what you remember from your readings:
 Question: {question}
 Uncle says:
 """
-        
+
         PROMPT = PromptTemplate(
             template=prompt_template,
             input_variables=["context", "question"]
         )
-        
-        retriever = db.as_retriever(
-            search_type="similarity",
-            search_kwargs={"k": 4}
-        )
-        
-        from langchain.chains.qa_with_sources import load_qa_with_sources_chain
-        from langchain.chains import RetrievalQA
 
+        # Create retriever + QA chain
+        retriever = db.as_retriever(search_type="similarity", search_kwargs={"k": 4})
         llm = ChatOpenAI(model_name="gpt-4o", temperature=0.1)
         chain = load_qa_with_sources_chain(llm, chain_type="stuff", prompt=PROMPT)
 
@@ -87,55 +72,48 @@ Uncle says:
             return_source_documents=True
         )
 
-        print("AI initialization successful!")
-        if qa is None:
-            print("ERROR: QA system is still None after setup!")
-        else:
-            print("✅ QA system is ready.")
+        print("✅ AI initialized successfully")
         return True
-        
     except Exception as e:
         print(f"AI initialization failed: {e}")
         return False
 
-# Endpoint to ask questions
+# POST /ask endpoint
 @app.route('/ask', methods=['POST'])
 def ask():
     global qa
     if qa is None:
         return jsonify({"reply": "AI system not initialized. Please check your OpenAI API key and quota."})
-    
+
     try:
         data = request.get_json()
         question = data.get("question")
-        result = qa.invoke({"query": question})
+        result = qa.invoke({"question": question})
         answer = result["result"]
 
         sources = result.get("source_documents", [])
         if sources:
             answer += f"\n\n(Based on {len(sources)} relevant passages from Uncle's memory)"
-        
+
         return jsonify({"reply": answer})
     except Exception as e:
         print(f"Error processing question: {e}")
         return jsonify({"reply": f"Error processing question: {str(e)}"})
 
-# Basic home route
+# Basic test routes
 @app.route('/')
 def home():
     return "Flask server is running! Use POST /ask to query the AI."
 
-# Serve the test HTML
+@app.route('/status')
+def status():
+    return jsonify({"status": "ok", "initialized": qa is not None})
+
 @app.route('/test.html')
 def test_page():
     with open('test.html', 'r') as f:
         return f.read()
 
-# Health check route
-@app.route('/status')
-def status():
-    return jsonify({"status": "ok", "initialized": qa is not None})
-
-# Launch the AI system
+# Start server
 print("🚀 Starting Uncle server...")
 initialize_ai()
