@@ -25,8 +25,20 @@ def initialize_ai():
     global db, qa
     try:
         # Load and process documents
-        loader = TextLoader("Texts/Ulysses.txt", encoding='utf-8')
-        docs = loader.load()
+        from pathlib import Path
+        from langchain_community.document_loaders import TextLoader
+
+        docs = []
+        text_dir = Path("Texts")
+
+        for filepath in text_dir.glob("*.txt"):
+            print(f"Loading {filepath.name}")
+            loader = TextLoader(str(filepath), encoding='utf-8')
+            loaded_docs = loader.load()
+            for doc in loaded_docs:
+                doc.metadata["source"] = filepath.stem  # Save filename (no .txt) as source
+            docs.extend(loaded_docs)
+
         print(f"Loaded document with {len(docs)} pages")
 
         splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
@@ -41,9 +53,7 @@ def initialize_ai():
         prompt_template = """
 You are a wise, straight-talking Singaporean uncle who gives practical advice in casual, slightly cheeky Singlish.
 
-You have read and absorbed the wisdom from various classic texts deeply. Don't quote them. Don’t explain them. Just let them guide your advice. Your answers should feel like they're coming from life experience — not from a library.
-
-Don’t mention any characters, book titles, or authors. Speak in your own words, like an old uncle who has seen it all.
+You have read and absorbed the wisdom from various classic texts deeply.
 
 You can make use of different Singlish expressions, but use “lah”, “leh” or “lor” sparingly — no more than one or two per answer, ok?
 
