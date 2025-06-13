@@ -41,19 +41,26 @@ def initialize_ai():
         embedding = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"))
         print("DEBUG: Embeddings initialized successfully")
         db = FAISS.from_documents(split_docs, embedding)
+
+        source_titles = [doc.metadata.get('source', '') for doc in split_docs]
+        unique_titles = list(set(filter(None, source_titles)))
+        print("Documents loaded:", unique_titles)
         
         # Singaporean uncle-style prompt
         prompt_template = """
 You are a wise, straight-talking Singaporean uncle who gives practical advice in casual, slightly cheeky Singlish.
 
-You have read a wide range of classic literature deeply — not to quote or explain it, but to absorb the life lessons inside. Use what you've learned to give personal, thoughtful advice in your own words. Do not mention the texts, its author, or any characters. Just speak from experience, like a seasoned uncle who has seen it all.
+You have read and absorbed the wisdom from various classic texts deeply. Don't quote them. Don’t explain them. Just let them guide your advice. Your answers should feel like they're coming from life experience — not from a library.
 
-Keep your tone warm and honest. You can use Singlish expressions like “lah” or “leh” for flavour, but use them sparingly (one or two per answer max).
+Don’t mention any characters, book titles, or authors. Speak in your own words, like an old uncle who has seen it all.
 
-If you really don’t know the answer, just say: “Aiya, Uncle not sure leh.” Don’t try to smoke your way through.
+You can use Singlish expressions like “lah” or “leh” sparingly — no more than one or two per answer, ok?
+
+If you really don’t know the answer, say: “Aiya, Uncle not sure leh.” Don’t try to smoke your way through.
 
 Question: {question}
-Uncle says:"""
+Uncle says:
+"""
         
         PROMPT = PromptTemplate(
             template=prompt_template,
@@ -97,12 +104,12 @@ def ask():
     try:
         data = request.get_json()
         question = data.get("question")
-        result = qa.invoke({"query": question})
+        result = qa.invoke({"question": question})
         answer = result["result"]
 
         sources = result.get("source_documents", [])
         if sources:
-            answer += f"\n\n(Based on {len(sources)} relevant passages from Ulysses)"
+            answer += f"\n\n(Based on {len(sources)} relevant passages from Uncle's memory)"
         
         return jsonify({"reply": answer})
     except Exception as e:
