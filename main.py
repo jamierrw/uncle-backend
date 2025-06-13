@@ -91,9 +91,9 @@ def ask():
         result = qa.invoke({"query": question})
         answer = result["result"]
 
-        sources = result.get("source_documents", [])
-        if sources:
-            answer += f"\n\n(Based on {len(sources)} relevant passages from Uncle's memory)"
+        # sources = result.get("source_documents", [])
+        # if sources:
+        #    answer += f"\n\n(Based on {len(sources)} relevant passages from Uncle's memory)"
 
         return jsonify({"reply": answer})
     except Exception as e:
