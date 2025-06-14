@@ -104,8 +104,6 @@ def ask():
         question = data.get("question")
         result = qa.invoke({"query": question})
 
-        result = qa.invoke({"question": question})
-
         # 🔍 Log the source books used (for debugging only)
         sources = result.get("source_documents", [])
         source_names = {doc.metadata.get("source", "unknown") for doc in sources}
