@@ -103,11 +103,15 @@ def ask():
         data = request.get_json()
         question = data.get("question")
         result = qa.invoke({"query": question})
-        answer = result["result"]
 
-        # sources = result.get("source_documents", [])
-        # if sources:
-        #    answer += f"\n\n(Based on {len(sources)} relevant passages from Uncle's memory)"
+        result = qa.invoke({"question": question})
+
+        # 🔍 Log the source books used (for debugging only)
+        sources = result.get("source_documents", [])
+        source_names = {doc.metadata.get("source", "unknown") for doc in sources}
+        print("Sources used in reply:", source_names)
+
+        answer = result["result"]
 
         return jsonify({"reply": answer})
     except Exception as e:
