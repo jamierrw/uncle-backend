@@ -106,7 +106,7 @@ def tag_expression(reply):
         "uncle_teasing": ["don’t play play", "naughty", "cheeky", "you ah", "i laugh until cry"],
         "uncle_thinking": ["let me think", "must reflect", "think first", "pause to consider", "deep thoughts"],
         "uncle_siaoah": ["siao", "you okay or not", "strange", "weird", "crazy talk"],
-        "uncle_canlah": ["can lah", "sure can", "why not", "go for it", "okay lah"],,
+        "uncle_canlah": ["can lah", "sure can", "why not", "go for it", "okay lah"],
         "uncle_listening": ["go on", "i’m listening", "tell me more", "continue", "i hear you"],
         "uncle_neutral": ["hmm", "okay", "i see", "noted", "understood"],
         "uncle_serious": ["listen up", "focus", "this one important", "pay attention", "serious issue"],
