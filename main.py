@@ -132,8 +132,8 @@ def ask():
         print("Sources used in reply:", source_names)
 
         answer = result["result"]
-
-        return jsonify({"reply": answer})
+        expression = tag_expression(answer)
+        return jsonify({"reply": answer, "expression": expression})        
     except Exception as e:
         print(f"Error processing question: {e}")
         return jsonify({"reply": f"Error processing question: {str(e)}"})
