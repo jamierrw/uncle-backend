@@ -93,7 +93,27 @@ Uncle says:
     except Exception as e:
         print(f"AI initialization failed: {e}")
         return False
-
+        
+def tag_expression(reply):
+    reply = reply.lower()
+    if "sorry" in reply or "disappointed" in reply:
+        return "uncle_disappointed"
+    elif "haha" in reply or "funny" in reply or "cheeky" in reply:
+        return "uncle_teasing"
+    elif "don’t worry" in reply or "can lah" in reply:
+        return "uncle_encouraging"
+    elif "walao" in reply or "shock" in reply:
+        return "uncle_walao"
+    elif "steady" in reply or "well done" in reply:
+        return "uncle_steadiest"
+    elif "think first" in reply or "reflect" in reply:
+        return "uncle_thinking"
+    elif "aiyoh" in reply:
+        return "uncle_aiyoh"
+    elif "good job" in reply:
+        return "uncle_proud"
+    return "uncle_neutral"
+    
 # POST /ask endpoint
 @app.route('/ask', methods=['POST'])
 def ask():
