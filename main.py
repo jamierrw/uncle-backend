@@ -96,22 +96,47 @@ Uncle says:
         
 def tag_expression(reply):
     reply = reply.lower()
-    if "sorry" in reply or "disappointed" in reply:
-        return "uncle_disappointed"
-    elif "haha" in reply or "funny" in reply or "cheeky" in reply:
-        return "uncle_teasing"
-    elif "don’t worry" in reply or "can lah" in reply:
-        return "uncle_encouraging"
-    elif "walao" in reply or "shock" in reply:
-        return "uncle_walao"
-    elif "steady" in reply or "well done" in reply:
-        return "uncle_steadiest"
-    elif "think first" in reply or "reflect" in reply:
-        return "uncle_thinking"
-    elif "aiyoh" in reply:
-        return "uncle_aiyoh"
-    elif "good job" in reply:
-        return "uncle_proud"
+
+    triggers = {
+        "uncle_approving": ["good thinking", "that’s smart", "solid answer", "you did well", "nicely done"],
+        "uncle_happy": ["so happy", "feel good", "nice lah", "this is great", "i love this"],
+        "uncle_proud": ["proud of you", "so proud", "well done", "good job", "you’ve grown"],
+        "uncle_steady": ["steady lah", "respect", "power", "that’s the way", "solid work"],
+        "uncle_supportive": ["i’m with you", "uncle here", "you’re not alone", "we walk together", "don’t worry"],
+        "uncle_teasing": ["don’t play play", "naughty", "cheeky", "you ah", "i laugh until cry"],
+        "uncle_thinking": ["let me think", "must reflect", "think first", "pause to consider", "deep thoughts"],
+        "uncle_siaoah": ["siao", "you okay or not", "strange", "weird", "crazy talk"],
+        "uncle_canlah": ["can lah", "sure can", "why not", "go for it", "okay lah"],,
+        "uncle_listening": ["go on", "i’m listening", "tell me more", "continue", "i hear you"],
+        "uncle_neutral": ["hmm", "okay", "i see", "noted", "understood"],
+        "uncle_serious": ["listen up", "focus", "this one important", "pay attention", "serious issue"],
+        "uncle_unsure": ["not sure", "maybe", "could be", "possibly", "hard to say"],
+        "uncle_wait": ["wait ah", "hold on", "not so fast", "pause", "give me a sec"],
+        "uncle_wedidit": ["we did it", "we got this", "together can", "let’s go", "jia you"],
+        "uncle_wise": ["life lesson", "take it from me", "seen it all", "wisdom", "uncle know best"],
+        "uncle_aiyoh": ["aiyoh", "why like that", "sian", "no choice", "too much already"],
+        "uncle_annoyed": ["not again", "why you like that", "fed up", "annoying", "tired of this"],
+        "uncle_angry": ["angry", "furious", "cannot tahan", "i tell you ah", "cross the line"],
+        "uncle_disappointed": ["disappointed", "thought better of you", "expected more", "let down", "not what i hoped"],
+        "uncle_embarrassed": ["so malu", "paiseh", "oops", "never mind", "don’t laugh"],
+        "uncle_regretful": ["shouldn’t have", "i regret", "wrong move", "wish i didn’t", "too late now"],
+        "uncle_sad": ["sad", "heart pain", "break my heart", "lost something", "feel down"],
+        "uncle_sighing": ["haiz", "life lor", "what to do", "just like that", "bo bian"],
+        "uncle_suspicious": ["you believe ah", "doubt it", "sounds fake", "don’t bluff", "hmm sus"],
+        "uncle_surprised": ["wah", "didn’t expect", "shocked", "eh really", "surprised lah"],
+        "uncle_warning": ["warning", "be careful", "watch out", "take note", "i told you so"],
+        "uncle_worried": ["worried", "not safe", "risky", "i’m concerned", "dangerous ah"],
+        "uncle_smug": ["see i told you", "not bad hor", "ownself clever", "easy lah", "you doubt me meh"],
+        "uncle_thinkfirst": ["must think first", "don’t rush", "consider properly", "pause before act", "use brain hor"],
+        "uncle_conspirator": ["just between us", "nobody else knows", "secret lah", "come closer", "psst"],
+        "uncle_bojio": ["bojio", "never ask me", "how come never jio", "always forget me", "next time call me lah"],
+        "uncle_walao": ["walao eh", "too much", "eh serious", "cannot believe", "crazy lah"]
+    }
+
+    for expression, phrases in triggers.items():
+        if any(trigger in reply for trigger in phrases):
+            return expression
+
     return "uncle_neutral"
     
 # POST /ask endpoint
