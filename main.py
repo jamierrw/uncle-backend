@@ -100,20 +100,22 @@ def tag_expression(reply):
     triggers = {
         "uncle_aiyoh": ["aiyoh", "aiyo", "aiyah", "aiya", "why like that", "sian", "so careless", "tsk", "silly"],
         "uncle_angry": ["angry", "furious", "cannot tahan", "enough already", "cross the line", "absolutely not", "tired of this"],
-        "uncle_annoyed": ["not again", "why like that", "why you like that", "headache lah", "annoying", "nonsense"],
+        "uncle_annoyed": ["not again", "why like that", "why you like that", "headache lah", "annoying", "nonsense", "not funny", "no joke"],
         "uncle_approving": ["good thinking", "smart", "solid answer", "did well", "nicely done", "nice one", "makes sense", "exactly right", "spot on", "you got it", "agree with you", "yes."],
         "uncle_bojio": ["bojio", "never ask me", "never invite", "jio", "without me", "next time call me lah", "uncle also want"],
         "uncle_calm": ["easy", "calm", "peaceful", "relax", "lepak", "no rush", "waiting", "be here still", "kancheong"],
         "uncle_canlah": ["can lah", "sure can", "why not", "go for it", "okay lah", "no problem", "possible what"],
         "uncle_conspirator": ["between us", "nobody else", "secret", "come closer", "psst", "don't tell anyone", "wink", "secret plan", "just us guys"], 
         "uncle_disappointed": ["disappointed", "expected more", "expected better", "let down", "not what i hoped"],
-        "uncle_dontplay": ["don't play play", "be serious", "no joke", "no joking", "don't joke", "real talk", "stop fooling around"],
+        "uncle_dontplay": ["don't play play", "be serious", "no joking", "don't joke", "real talk", "stop fooling around"],
         "uncle_embarrassed": ["malu", "paiseh", "oops", "never mind", "don’t laugh", "awkward", "my bad"],
         "uncle_encouraging": ["you got this", "great!", "well done", "don't worry", "keep going", "stick it out", "still can make it"],
+        "uncle_excited": ["shiok", "tell you ah", "can't wait", "wah", "very happening", "solid sia", "uncle excited"],
+        "uncle_explaining": ["explain", "actually", "thing is", "you see", "in other words", "let me", "sum up"],     
+        "uncle_happy": ["so pleased", "happy for you", "feel good", "nice lah", "great news", "love this", "wonderful", "best feeling"],
+        "uncle_laughing": ["hahaha", "haha", "so funny", "i'm laughing", "i laughed", "joker lah", "damn funny"],
+        "uncle_neutral": ["hmm", "okay", "i see", "noted", "not sure", "nonsense", "dunno"],
         
-        "uncle_happy": ["so happy", "feel good", "nice lah", "this is great", "i love this"],
-        "uncle_listening": ["go on", "i’m listening", "tell me more", "continue", "i hear you"],
-        "uncle_neutral": ["hmm", "okay", "i see", "noted", "understood"],
         "uncle_proud": ["proud of you", "so proud", "well done", "good job", "you’ve grown"],
         "uncle_regretful": ["shouldn’t have", "i regret", "wrong move", "wish i didn’t", "too late now"],
         "uncle_sad": ["sad", "heart pain", "break my heart", "lost something", "feel down"],
@@ -133,7 +135,7 @@ def tag_expression(reply):
         "uncle_walao": ["walao eh", "too much", "eh serious", "cannot believe", "crazy lah"]
         "uncle_warning": ["warning", "be careful", "watch out", "take note", "i told you so"],
         "uncle_wedidit": ["we did it", "we got this", "together can", "let’s go", "jia you"],
-        "uncle_wise": ["life lesson", "take it from me", "seen it all", "wisdom", "uncle know best"],
+        "uncle_wise": ["life lesson", "take it from me", "seen it all", "wisdom", "uncle know best", "I hear you", "i'm listening"],
         "uncle_worried": ["worried", "not safe", "risky", "i’m concerned", "dangerous ah"],
     }
 
