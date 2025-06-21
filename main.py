@@ -119,7 +119,7 @@ def tag_expression(reply):
         "uncle_regretful": ["shouldn’t have", "i regret", "wrong move", "was wrong", "i feel bad", "uncle feel bad", "too late", "next time better"],
         "uncle_relieved": ["wah lucky", "lucky", "thank goodness", "heng ah", "finally", "dodged", "whew"],
         "uncle_sad": ["sad", "saddest", "heart pain", "break my heart", "heartbroken", "lost something", "feel down", "tragic", "tragedy", "poor you"],
-        "uncle_serious": ["listen", "focus", "carefully", "important", "pay attention", "serious", "take seriously", "must understand", "be careful"],
+        "uncle_serious": ["listen", "focus", "carefully", "important", "pay attention", "serious", "take seriously", "must understand"],
         "uncle_shocked": ["cannot believe", "what the", "shocking", "never see before", "amazing!", "incredible!", "what in the"],
         "uncle_siaoah": ["siao", "you okay or not", "strange", "weird", "crazy talk", "crazy one", "mad"],
         "uncle_sighing": ["haiz", "life lor", "what to do", "just like that", "bo bian", "long story", "no choice lah", "sigh"],
@@ -128,17 +128,16 @@ def tag_expression(reply):
         "uncle_supportive": ["i’m with you", "uncle here", "you’re not alone", "we walk together", "don’t worry", "here for you", "always here", "uncle listening", "i'm listening"],
         "uncle_suspicious": ["you believe ah", "doubt it", "sounds fake", "don’t bluff", "bit sus", "really meh", "you sure or not", "fishy", "suspicious", "scam", "cannot trust"],
         "uncle_surprised": ["wah", "didn’t expect", "serious?", "really ah?", "surprised lah", "wow"],
-        
-        "uncle_teasing": ["don’t play play", "naughty", "cheeky", "you ah", "i laugh until cry"],
-        "uncle_thinkfirst": ["must think first", "don’t rush", "consider properly", "pause before act", "use brain hor"],
-        "uncle_thinking": ["let me think", "must reflect", "think first", "pause to consider", "deep thoughts"],
-        "uncle_unsure": ["not sure", "maybe", "could be", "possibly", "hard to say"],        
-        "uncle_wait": ["wait ah", "hold on", "not so fast", "pause", "give me a sec"],
-        "uncle_walao": ["walao eh", "too much", "eh serious", "cannot believe", "crazy lah"]
-        "uncle_warning": ["warning", "be careful", "watch out", "take note", "i told you so"],
-        "uncle_wedidit": ["we did it", "we got this", "together can", "let’s go", "jia you"],
-        "uncle_wise": ["life lesson", "take it from me", "seen it all", "wisdom", "uncle know best", "I hear you"],
-        "uncle_worried": ["worried", "not safe", "risky", "i’m concerned", "dangerous ah"],
+        "uncle_teasing": ["don’t play play", "naughty", "cheeky", "you ah", "laugh until cry", "teasing", "just joking", "kidding", "hah!"],
+        "uncle_thinkfirst": ["think first", "don’t rush", "consider", "pause before act", "use brain", "use your brain", "reflect", "think carefully"],
+        "uncle_thinking": ["let me think", "thinking", "pondering", "hmm"],
+        "uncle_unsure": ["not sure", "maybe", "could be", "possibly", "hard to say", "don't know", "i guess", "uncertain", "then how?"],        
+        "uncle_wait": ["wait ah", "hold on", "hang on", "not so fast", "pause", "not yet", "stop!"],
+        "uncle_walao": ["walao", "too much", "unbelievable", "how can", "really or not"],
+        "uncle_warning": ["warning", "watch out", "take note", "told you so", "tell you first ah", "dangerous", "be careful"],
+        "uncle_wedidit": ["we did it", "you did it", "success", "we got this", "together can", "let’s go", "jia you", "accomplished", "high five"],
+        "uncle_wise": ["life lesson", "take it from me", "seen it all", "wisdom", "wise man", "uncle know best", "I hear you", "deep thoughts", "think deep", "think harder", "listen up"],
+        "uncle_worried": ["worried", "not safe", "risky", "i’m concerned", "jialat already", "how now?", "not looking good"],
     }
 
     for expression, phrases in triggers.items():
