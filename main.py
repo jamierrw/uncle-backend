@@ -98,7 +98,7 @@ def tag_expression(reply):
     reply = reply.lower()
 
     triggers = {
-        "uncle_aiyoh": ["aiyoh", "aiyo", "aiyah", "aiya", "why like that", "sian", "so careless", "tsk", "silly"],
+        "uncle_aiyoh": ["aiyoh", "aiyo", "aiyah", "aiya", "why like that", "sian", "so careless", "tsk", "silly", "wrong"],
         "uncle_angry": ["angry", "furious", "cannot tahan", "enough already", "cross the line", "absolutely not", "tired of this"],
         "uncle_annoyed": ["not again", "why like that", "why you like that", "headache lah", "annoying", "nonsense", "not funny", "no joke"],
         "uncle_approving": ["good thinking", "smart", "solid answer", "did well", "nicely done", "nice one", "makes sense", "exactly right", "spot on", "you got it", "agree with you", "yes."],
@@ -144,7 +144,7 @@ def tag_expression(reply):
         if any(trigger in reply for trigger in phrases):
             return expression
 
-    return "uncle_neutral"
+    return "uncle_fallback"
     
 # POST /ask endpoint
 @app.route('/ask', methods=['POST'])
