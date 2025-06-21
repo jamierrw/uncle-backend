@@ -103,7 +103,7 @@ def tag_expression(reply):
         "uncle_annoyed": ["not again", "why like that", "why you like that", "headache lah", "annoying", "nonsense", "not funny", "no joke"],
         "uncle_approving": ["good thinking", "smart", "solid answer", "did well", "nicely done", "nice one", "makes sense", "exactly right", "spot on", "you got it", "agree with you", "yes."],
         "uncle_bojio": ["bojio", "never ask me", "never invite", "jio", "without me", "next time call me lah", "uncle also want"],
-        "uncle_calm": ["easy", "calm", "peaceful", "relax", "lepak", "no rush", "waiting", "be here still", "kancheong"],
+        "uncle_calm": ["easy", "calm", "peaceful", "lepak", "no rush", "waiting", "be here still", "kancheong"],
         "uncle_canlah": ["can lah", "sure can", "why not", "go for it", "okay lah", "no problem", "possible what"],
         "uncle_conspirator": ["between us", "nobody else", "secret", "come closer", "psst", "don't tell anyone", "wink", "secret plan", "just us guys"], 
         "uncle_disappointed": ["disappointed", "expected more", "expected better", "let down", "not what i hoped"],
@@ -124,11 +124,11 @@ def tag_expression(reply):
         "uncle_siaoah": ["siao", "you okay or not", "strange", "weird", "crazy talk", "crazy one", "mad"],
         "uncle_sighing": ["haiz", "life lor", "what to do", "just like that", "bo bian", "long story", "no choice lah", "sigh"],
         "uncle_smug": ["told you", "not bad hor", "ownself clever", "easy lah", "doubt me meh", "see lah", "uncle always right", "uncle was right", "never doubt", "what did i say"],
+        "uncle_steady": ["steady", "steadiest", "respect", "power", "that’s the way", "solid work", "under control", "relax", "take it slow"],
+        "uncle_supportive": ["i’m with you", "uncle here", "you’re not alone", "we walk together", "don’t worry", "here for you", "always here", "uncle listening", "i'm listening"],
+        "uncle_suspicious": ["you believe ah", "doubt it", "sounds fake", "don’t bluff", "bit sus", "really meh", "you sure or not", "fishy", "suspicious", "scam", "cannot trust"],
+        "uncle_surprised": ["wah", "didn’t expect", "serious?", "really ah?", "surprised lah", "wow"],
         
-        "uncle_steady": ["steady lah", "respect", "power", "that’s the way", "solid work"],
-        "uncle_supportive": ["i’m with you", "uncle here", "you’re not alone", "we walk together", "don’t worry"],
-        "uncle_suspicious": ["you believe ah", "doubt it", "sounds fake", "don’t bluff", "hmm sus"],
-        "uncle_surprised": ["wah", "didn’t expect", "shocked", "eh really", "surprised lah"],
         "uncle_teasing": ["don’t play play", "naughty", "cheeky", "you ah", "i laugh until cry"],
         "uncle_thinkfirst": ["must think first", "don’t rush", "consider properly", "pause before act", "use brain hor"],
         "uncle_thinking": ["let me think", "must reflect", "think first", "pause to consider", "deep thoughts"],
@@ -137,7 +137,7 @@ def tag_expression(reply):
         "uncle_walao": ["walao eh", "too much", "eh serious", "cannot believe", "crazy lah"]
         "uncle_warning": ["warning", "be careful", "watch out", "take note", "i told you so"],
         "uncle_wedidit": ["we did it", "we got this", "together can", "let’s go", "jia you"],
-        "uncle_wise": ["life lesson", "take it from me", "seen it all", "wisdom", "uncle know best", "I hear you", "i'm listening"],
+        "uncle_wise": ["life lesson", "take it from me", "seen it all", "wisdom", "uncle know best", "I hear you"],
         "uncle_worried": ["worried", "not safe", "risky", "i’m concerned", "dangerous ah"],
     }
 
