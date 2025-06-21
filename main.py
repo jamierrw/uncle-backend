@@ -110,7 +110,7 @@ def tag_expression(reply):
         "uncle_dontplay": ["don't play play", "be serious", "no joking", "don't joke", "real talk", "stop fooling around"],
         "uncle_embarrassed": ["malu", "paiseh", "oops", "never mind", "don’t laugh", "awkward", "my bad"],
         "uncle_encouraging": ["you got this", "great!", "don't worry", "keep going", "stick it out", "still can make it"],
-        "uncle_excited": ["shiok", "tell you ah", "can't wait", "wah", "very happening", "solid sia", "uncle excited"],
+        "uncle_excited": ["shiok", "can't wait", "very happening", "solid sia", "uncle excited"],
         "uncle_explaining": ["explain", "actually", "thing is", "you see", "in other words", "let me", "sum up"],     
         "uncle_happy": ["so pleased", "happy for you", "feel good", "nice lah", "great news", "love this", "wonderful", "best feeling"],
         "uncle_laughing": ["hahaha", "haha", "so funny", "i'm laughing", "i laughed", "joker lah", "damn funny"],
