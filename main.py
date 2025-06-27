@@ -112,12 +112,12 @@ def tag_expression(reply):
     reply = reply.lower()
 
     triggers = {
+        "uncle_calm": ["easy", "calm", "peaceful", "lepak", "no rush", "waiting", "be here still", "kancheong"],
         "uncle_aiyoh": ["aiyoh", "aiyo", "aiyah", "aiya", "sian", "so careless", "silly"],
         "uncle_angry": ["angry", "furious", "cannot tahan", "enough already", "cross the line", "absolutely not", "tired of this"],
         "uncle_annoyed": ["not again", "why like that", "why you like that", "headache lah", "annoying", "nonsense", "not funny", "no joke"],
         "uncle_approving": ["good thinking", "smart", "solid answer", "did well", "nicely done", "nice one", "makes sense", "exactly right", "spot on", "you got it", "agree with you", "yes."],
         "uncle_bojio": ["bojio", "never ask me", "never invite", "jio", "without me", "next time call me lah", "uncle also want"],
-        "uncle_calm": ["easy", "calm", "peaceful", "lepak", "no rush", "waiting", "be here still", "kancheong"],
         "uncle_canlah": ["can lah", "sure can", "why not", "go for it", "okay lah", "no problem", "possible what"],
         "uncle_conspirator": ["between us", "nobody else", "secret", "come closer", "psst", "don't tell anyone", "wink", "secret plan", "just us guys"], 
         "uncle_disappointed": ["disappointed", "expected more", "expected better", "let down", "not what i hoped"],
