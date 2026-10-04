@@ -1,9 +1,10 @@
 flask
 gunicorn
 openai
-langchain
-langchain-openai
-langchain-community
+langchain==0.3.27
+langchain-openai==0.3.35
+langchain-community==0.3.29
+langchain-text-splitters==0.3.11
 tiktoken
 python-dotenv
 requests
